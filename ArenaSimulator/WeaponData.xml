@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<weapons>
+	<damage name = "Physical">
+		<swords>
+			<sword name = "Iron Sword">
+				<attack>5</attack>
+				<hitrate>90</hitrate>
+				<critrate>0</critrate>
+			</swords>
+			<sword name = "Killing Edge">
+				<attack>6</attack>
+				<hitrate>75</hitrate>
+				<critrate>30</critrate>
+			</sword>
+		</swords>
+		<lances></lances>
+		<axes></axes>
+		<bows></bows>
+	</damage>
+	<damage name = "Magical">
+		<swords></swords>
+		<lances></lances>
+		<axes></axes>
+		<bows></bows>
+		<tomes>
+			<tome name = "Fire Tome">
+				<attack>5</attack>
+				<hitrate>90</hitrate>
+				<critrate>0</critrate>
+			</tome>
+		</tomes>
+	</damage>
+</weapons>
