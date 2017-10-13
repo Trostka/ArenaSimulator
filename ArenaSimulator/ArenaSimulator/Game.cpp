@@ -3,12 +3,16 @@
 #include "stdafx.h"
 #include "Game.h"
 
+#include <time.h>		// Used for random hit chance
 #include <iostream>
 using namespace std;
 
 // Get input for stats of player and their weapon at the start of the game
 Game::Game()
 {
+	// Initialize random seed
+	srand(time(NULL));
+
 	// Player input variables to use for stats
 	int hp, atk, skl, spd, def, res;
 
@@ -101,10 +105,13 @@ Game::Game()
 void Game::GameLoop()
 {
 	// Used to decide if the player wants to surrender
-	int choice = -1;
+	int choice;
 
 	while (true)
 	{
+		// Set choice so the menu always pops up after each round of combat
+		choice = -1;
+
 		// Player attacks
 		cout << "Player attacks Enemy with the " << player->getWeaponName();
 		Combat(player, enemy);
@@ -155,11 +162,25 @@ void Game::GameLoop()
 // Attacker deals damage to target after accounting for defenses
 void Game::Combat(BaseUnit* attacker, BaseUnit* target)
 {
+	// Variable for dodge chance used by both sides
+	int dodgeChance;
+
 	// Variable to hold damage
 	int calculatedDmg;
+
 	// Hold attacker and target weapons
 	BaseWeapon* atkWep = attacker->getEquippedWeapon(); 
 	BaseWeapon* tarWep = target->getEquippedWeapon();
+
+	// Calculate dodgeChance, using the target's speed
+	dodgeChance = target->getSpeed() * 5;
+
+	// If a random number rolls lower than dodgeChance, target dodges the attack
+	if (static_cast<int>((rand() % 100 + 1)) <= dodgeChance)
+	{
+		cout << "... but the attack missed!\n";
+		return;
+	}
 
 	// Decide how target takes damage based on attacker's weapon type
 	switch (atkWep->getDamageType())
