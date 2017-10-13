@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<weapons>
+	<damage name = "Physical">
+		<swords>
+			<sword name = "Iron Sword">
+				<attack>5</attack>
+				<hitrate>90</hitrate>
+				<critrate>0</critrate>
+				<advantage>AXE</advantage>
+				<disadvantage>LANCE</disadvantage>
+			</sword>
+			<sword name = "Killing Edge">
+				<attack>6</attack>
+				<hitrate>75</hitrate>
+				<critrate>30</critrate>
+				<advantage>AXE</advantage>
+				<disadvantage>LANCE</disadvantage>
+			</sword>
+		</swords>
+		<lances></lances>
+		<axes></axes>
+		<bows></bows>
+	</damage>
+	<damage name = "Magical">
+		<swords></swords>
+		<lances></lances>
+		<axes></axes>
+		<bows></bows>
+		<tomes>
+			<tome name = "Fire Tome">
+				<attack>5</attack>
+				<hitrate>90</hitrate>
+				<critrate>0</critrate>
+				<advantage>NONE</advantage>
+				<disadvantage>NONE</disadvantage>
+			</tome>
+			<tome name = "Wildfire">
+				<attack>6</attack>
+				<hitrate>75</hitrate>
+				<critrate>30</critrate>
+				<advantage>NONE</advantage>
+				<disadvantage>NONE</disadvantage>
+			</tome>
+		</tomes>
+	</damage>
+</weapons>

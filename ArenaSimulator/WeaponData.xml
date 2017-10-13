@@ -8,7 +8,7 @@
 				<critrate>0</critrate>
 				<advantage>AXE</advantage>
 				<disadvantage>LANCE</disadvantage>
-			</swords>
+			</sword>
 			<sword name = "Killing Edge">
 				<attack>6</attack>
 				<hitrate>75</hitrate>
@@ -17,15 +17,8 @@
 				<disadvantage>LANCE</disadvantage>
 			</sword>
 		</swords>
-		<lances></lances>
-		<axes></axes>
-		<bows></bows>
 	</damage>
 	<damage name = "Magical">
-		<swords></swords>
-		<lances></lances>
-		<axes></axes>
-		<bows></bows>
 		<tomes>
 			<tome name = "Fire Tome">
 				<attack>5</attack>

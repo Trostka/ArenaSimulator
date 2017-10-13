@@ -2,19 +2,25 @@
 
 #include "stdafx.h"
 #include "Game.h"
-//#include "tinyxml2.h"
+#include "tinyxml2.h"
 
 #include <time.h>		// Used for random hit chance
 #include <iostream>
 
 using namespace std;
-//using namespace tinyxml2;
+using namespace tinyxml2;
 
 // Get input for stats of player and their weapon at the start of the game
 Game::Game()
 {
 	// Initialize random seed
 	srand(time(NULL));
+
+	XMLDocument doc;
+	doc.LoadFile("Content/Data/WeaponData.xml");
+	cout << doc.ErrorIDToName(doc.ErrorID()) << endl;
+
+	XMLElement* weaponsNode = doc.FirstChildElement("weapons");
 
 	// Player input variables to use for stats
 	int hp, atk, skl, spd, def, res;
@@ -179,7 +185,7 @@ void Game::Combat(BaseUnit* attacker, BaseUnit* target)
 	dodgeChance = target->getSpeed() * 5;
 
 	// If a random number rolls lower than dodgeChance, target dodges the attack
-	if (static_cast<int>((rand() % 100 + 1)) <= dodgeChance)
+	if ((rand() % 100 + 1) <= dodgeChance)
 	{
 		cout << "... but the attack missed!\n";
 		return;
