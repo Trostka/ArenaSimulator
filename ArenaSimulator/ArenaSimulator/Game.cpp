@@ -2,10 +2,13 @@
 
 #include "stdafx.h"
 #include "Game.h"
+//#include "tinyxml2.h"
 
 #include <time.h>		// Used for random hit chance
 #include <iostream>
+
 using namespace std;
+//using namespace tinyxml2;
 
 // Get input for stats of player and their weapon at the start of the game
 Game::Game()

@@ -6,11 +6,15 @@
 				<attack>5</attack>
 				<hitrate>90</hitrate>
 				<critrate>0</critrate>
+				<advantage>AXE</advantage>
+				<disadvantage>LANCE</disadvantage>
 			</swords>
 			<sword name = "Killing Edge">
 				<attack>6</attack>
 				<hitrate>75</hitrate>
 				<critrate>30</critrate>
+				<advantage>AXE</advantage>
+				<disadvantage>LANCE</disadvantage>
 			</sword>
 		</swords>
 		<lances></lances>
@@ -27,6 +31,15 @@
 				<attack>5</attack>
 				<hitrate>90</hitrate>
 				<critrate>0</critrate>
+				<advantage>NONE</advantage>
+				<disadvantage>NONE</disadvantage>
+			</tome>
+			<tome name = "Wildfire">
+				<attack>6</attack>
+				<hitrate>75</hitrate>
+				<critrate>30</critrate>
+				<advantage>NONE</advantage>
+				<disadvantage>NONE</disadvantage>
 			</tome>
 		</tomes>
 	</damage>
