@@ -11,8 +11,8 @@ private:
 	int currentHp, maxHp;
 	// Unit stats
 	int attack, skill, speed, defense, resistance;
-	// Unit's attack stat + equipped weapon
-	int totalAtk;
+	// Unit's attack stat + equipped weapon; twice unit's skill stat + weapon hit rate
+	int totalAtk, totalHit;
 	// Unit's equipped weapon
 	BaseWeapon* equippedWeapon;
 public:
@@ -25,7 +25,7 @@ public:
 	}
 
 	// Constructor with parameters
-	BaseUnit(int hp, int ak, int sk, int sp, int df, int rs, std::string wepName, int wepAtk, WeaponType wepType, DamageType dmgType,
+	BaseUnit(int hp, int ak, int sk, int sp, int df, int rs, std::string wepName, int wepAtk, int wepHit, WeaponType wepType, DamageType dmgType,
 		WeaponType strType, WeaponType wkType) :
 		maxHp(hp), attack(ak), skill(sk), speed(sp), defense(df), resistance(rs)
 	{
@@ -33,10 +33,12 @@ public:
 		currentHp = maxHp;
 
 		// Equip a weapon
-		equippedWeapon = new BaseWeapon(wepName, wepAtk, wepType, dmgType, strType, wkType);
+		equippedWeapon = new BaseWeapon(wepName, wepAtk, wepHit, wepType, dmgType, strType, wkType);
 
 		// Get totalAtk by adding weapon attack to unit's attack stat
 		totalAtk = attack + equippedWeapon->getWeaponAtk();
+		// Get totalHit by adding weapon hit to twice unit's skill stat
+		totalHit = (skill * 2) + equippedWeapon->getWeaponHit();
 	}
 
 	// Take damage dealt by the enemy

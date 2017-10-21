@@ -1,46 +1,22 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <weapons>
-	<damage name = "Physical">
-		<swords>
-			<sword name = "Iron Sword">
-				<attack>5</attack>
-				<hitrate>90</hitrate>
-				<critrate>0</critrate>
-				<advantage>AXE</advantage>
-				<disadvantage>LANCE</disadvantage>
-			</sword>
-			<sword name = "Killing Edge">
-				<attack>6</attack>
-				<hitrate>75</hitrate>
-				<critrate>30</critrate>
-				<advantage>AXE</advantage>
-				<disadvantage>LANCE</disadvantage>
-			</sword>
-		</swords>
-		<lances></lances>
-		<axes></axes>
-		<bows></bows>
+	<damage type="PHYSICAL">
+		<weapon type = "SWORD">
+			<weapon name="Iron Sword" attack="5" hitrate="90" advantage="AXE" disadvantage="LANCE"/>
+			<weapon name="Spearbreaker" attack="6" hitrate="80" advantage="AXE" disadvantage="LANCE"/>
+		</weapon>
+		<weapon type = "LANCE"></weapon>
+		<weapon type = "AXE"></weapon>
+		<weapon type = "BOW"></weapon>
 	</damage>
-	<damage name = "Magical">
-		<swords></swords>
-		<lances></lances>
-		<axes></axes>
-		<bows></bows>
-		<tomes>
-			<tome name = "Fire Tome">
-				<attack>5</attack>
-				<hitrate>90</hitrate>
-				<critrate>0</critrate>
-				<advantage>NONE</advantage>
-				<disadvantage>NONE</disadvantage>
-			</tome>
-			<tome name = "Wildfire">
-				<attack>6</attack>
-				<hitrate>75</hitrate>
-				<critrate>30</critrate>
-				<advantage>NONE</advantage>
-				<disadvantage>NONE</disadvantage>
-			</tome>
-		</tomes>
+	<damage type="MAGICAL">
+		<weapon type = "SWORD"></weapon>
+		<weapon type = "LANCE"></weapon>
+		<weapon type = "AXE"></weapon>
+		<weapon type = "BOW"></weapon>
+		<weapon type = "TOME">
+			<weapon name="Fire Tome" attack="5" hitrate="90" advantage="NONE" disadvantage="NONE"/>
+			<weapon name="Thunder Tome" attack="6" hitrate="80" advantage="BOW" disadvantage="SWORD"/>
+		</weapon>
 	</damage>
 </weapons>

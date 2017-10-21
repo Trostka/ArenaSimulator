@@ -16,18 +16,14 @@ Game::Game()
 	// Initialize random seed
 	srand(time(NULL));
 
-	XMLDocument doc;
-	doc.LoadFile("Content/Data/WeaponData.xml");
-	cout << doc.ErrorIDToName(doc.ErrorID()) << endl;
-
-	XMLElement* weaponsNode = doc.FirstChildElement("weapons");
+	GetWeaponData();
 
 	// Player input variables to use for stats
 	int hp, atk, skl, spd, def, res;
 
 	// Input vars to use for player's weapon
 	string wepName;
-	int wepAtk, wepType, dmgType, strType, wkType;
+	int wepAtk, wepHit, wepType, dmgType, strType, wkType;
 	wepAtk = wepType = dmgType = strType = wkType = -1;
 
 	// Get player hit points
@@ -56,6 +52,9 @@ Game::Game()
 	// Get weapon attack
 	cout << "Please enter the weapon's attack: ";
 	cin >> wepAtk;
+	// Get weapon hit rate
+	cout << "Please enter the weapon's hit rate: ";
+	cin >> wepHit;
 
 	// Get weapon type, validating input
 	while (wepType < SWORD || wepType > NONE)
@@ -102,12 +101,107 @@ Game::Game()
 	}
 
 	// Set up the player and the enemy
-	player = new BaseUnit(hp, atk, skl, spd, def, res, wepName, wepAtk, 
+	player = new BaseUnit(hp, atk, skl, spd, def, res, wepName, wepAtk, wepHit,
 		static_cast<WeaponType>(wepType), static_cast<DamageType>(dmgType), 
 		static_cast<WeaponType>(strType), static_cast<WeaponType>(wkType));
-	enemy = new BaseUnit(20, 3, 6, 6, 2, 4, "fire tome", 5, TOME, MAGICAL, NONE, NONE);
+	enemy = new BaseUnit(20, 3, 6, 6, 2, 4, "fire tome", 5, 90, TOME, MAGICAL, NONE, NONE);
 
 	GameLoop();
+}
+
+// Read weapon data into the game from an xml file
+void Game::GetWeaponData()
+{
+	string damageName,		// Name of the damage type
+		   wepTypeName,		// Name of the weapon type
+		   wepName;			// Name of the weapon
+
+	DamageType dmgType;			// Weapon's damage type, based on damageName
+	WeaponType wepType,			// Type of the weapon, based on wepTypeName
+			   wepAdv,			// Weapon advantage type
+			   wepDisadv;		// Weapon disadvantage type
+
+	int wepAtk, wepHit;		// Weapon attack and hit rate
+
+	// Open the weapon data document for reading
+	XMLDocument doc;
+	doc.LoadFile("Content/Data/WeaponData.xml");
+	cout << doc.ErrorIDToName(doc.ErrorID()) << endl;
+
+	// Get the root node of the document
+	XMLElement* rootNode = doc.FirstChildElement("weapons");
+
+	// Get the first damage type node
+	XMLElement* damageNode = rootNode->FirstChildElement("damage");
+
+	// While damageNode exists...
+	while (damageNode != NULL)
+	{
+		// Get the name of the damage type
+		damageName = damageNode->Attribute("type");
+
+		// Get the first weapon type in the current damage category
+		XMLElement* wepTypeNode = damageNode->FirstChildElement("weapon");
+
+		// While wepTypeNode exists...
+		while (wepTypeNode != NULL)
+		{
+			// Get the current weapon type
+			wepTypeName = wepTypeNode->Attribute("type");
+			
+			// Get the first weapon of the current type
+			XMLElement* weaponNode = wepTypeNode->FirstChildElement("weapon");
+
+			// while weaponNode exists...
+			while (weaponNode != NULL)
+			{
+				// Get the weapon's attributes
+				wepName = weaponNode->Attribute("name");
+				weaponNode->QueryIntAttribute("attack", &wepAtk);
+				weaponNode->QueryIntAttribute("hitrate", &wepHit);
+				wepType = FindWeaponType(wepTypeName);
+				dmgType = FindDamageType(damageName);
+				wepAdv = FindWeaponType(weaponNode->Attribute("advantage"));
+				wepDisadv = FindWeaponType(weaponNode->Attribute("disadvantage"));
+					
+				// Create a temp weapon using the current attributes and add it to weaponList
+				BaseWeapon tempWep(wepName, wepAtk, wepHit, wepType, dmgType, wepAdv, wepDisadv);
+				weaponList.push_back(tempWep);
+
+				weaponNode = weaponNode->NextSiblingElement("weapon");
+			}
+
+			wepTypeNode = wepTypeNode->NextSiblingElement("weapon");
+		}
+
+		damageNode = damageNode->NextSiblingElement("damage");
+	}
+}
+
+// Get the weapon type by passing a string
+WeaponType Game::FindWeaponType(string name)
+{
+	if (name == "SWORD")
+		return SWORD;
+	else if (name == "LANCE")
+		return LANCE;
+	else if (name == "AXE")
+		return AXE;
+	else if (name == "BOW")
+		return BOW;
+	else if (name == "TOME")
+		return TOME;
+	else
+		return NONE;
+}
+
+// Get the damage type by passing a string
+DamageType Game::FindDamageType(string name)
+{
+	if (name == "PHYSICAL")
+		return PHYSICAL;
+	else if (name == "MAGICAL")
+		return MAGICAL;
 }
 
 // While both player and enemy don't have 0 hp, keep running this
