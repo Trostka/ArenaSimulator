@@ -26,6 +26,12 @@ Game::Game()
 	int wepAtk, wepHit, wepType, dmgType, strType, wkType;
 	wepAtk = wepType = dmgType = strType = wkType = -1;
 
+	// Temporary weapon variable
+	BaseWeapon tempWep;
+
+	// Used to decide whether to use a weapon from the weapon list or create your own
+	int choice = 0;
+
 	// Get player hit points
 	cout << "Please enter the player's max HP: ";
 	cin >> hp;
@@ -45,66 +51,115 @@ Game::Game()
 	cout << "Please enter the player's magical resistance: ";
 	cin >> res;
 
-	// Get weapon name
-	cin.ignore();
-	cout << "Please enter the weapon's name: ";
-	getline(cin, wepName);
-	// Get weapon attack
-	cout << "Please enter the weapon's attack: ";
-	cin >> wepAtk;
-	// Get weapon hit rate
-	cout << "Please enter the weapon's hit rate: ";
-	cin >> wepHit;
-
-	// Get weapon type, validating input
-	while (wepType < SWORD || wepType > NONE)
+	// Ask player to choose between using weapon from weapon list or creating their own
+	while (choice != 1 && choice != 2)
 	{
-		cout << "Please enter the type of your weapon.\n";
-		cout << "0 = Sword, 1 = Axe, 2 = Lance, 3 = Bow, 4 = Tome, 5 = None\n";
-		cin >> wepType;
+		cout << "Would you like to:\n";
+		cout << "1. Equip a weapon from the data file\n";
+		cout << "2. Create your own weapon.\n";
+		cin >> choice;
 
-		if (wepType < SWORD || wepType > NONE)
-			cout << "Invalid weapon type. Please try again.\n";
+		if (choice != 1 && choice != 2)
+			cout << "Invalid choice. Please enter 1 or 2.\n";
 	}
 
-	// Get damage type, validating input
-	while (dmgType < PHYSICAL || dmgType > MAGICAL)
+	// Use a weapon from the array
+	if (choice == 1)
 	{
-		cout << "Please enter the damage type of your weapon.\n";
-		cout << "0 = Physical, 1 = Magical\n";
-		cin >> dmgType;
+		cin.ignore();
+		cout << "Please enter the name of the weapon you would like to use: ";
+		getline(cin, wepName);
 
-		if (dmgType < PHYSICAL || dmgType > MAGICAL)
-			cout << "Invalid damage type. Please try again.\n";
+		// Perform a linear search for a weapon with a matching name
+		vector<BaseWeapon>::iterator iter;
+		for (iter = weaponList.begin(); iter < weaponList.end(); iter++)
+		{
+			if (iter->getWeaponName() == wepName)
+			{
+				tempWep = *iter;
+				break;
+			}
+		}
 	}
-
-	// Get weapon advantage type, validating input
-	while (strType < SWORD || strType > NONE)
+	// Create a custom weapon
+	else if (choice == 2)
 	{
-		cout << "Please enter the weapon type your weapon is strong against.\n";
-		cout << "0 = Sword, 1 = Axe, 2 = Lance, 3 = Bow, 4 = Tome, 5 = None\n";
-		cin >> strType;
+		// Get weapon name
+		cin.ignore();
+		cout << "Please enter the weapon's name: ";
+		getline(cin, wepName);
+		// Get weapon attack
+		cout << "Please enter the weapon's attack: ";
+		cin >> wepAtk;
+		// Get weapon hit rate
+		cout << "Please enter the weapon's hit rate: ";
+		cin >> wepHit;
 
-		if (strType < SWORD || strType > NONE)
-			cout << "Invalid advantage type. Please try again.\n";
-	}
+		// Set the weapon's name, attack, and hit rate
+		tempWep.setWeaponName(wepName);
+		tempWep.setWeaponAtk(wepAtk);
+		tempWep.setWeaponHit(wepHit);
 
-	// Get weapon disadvantage type, validating input
-	while (wkType < SWORD || wkType > NONE)
-	{
-		cout << "Please enter the weapon type your weapon is weak against.\n";
-		cout << "0 = Sword, 1 = Axe, 2 = Lance, 3 = Bow, 4 = Tome, 5 = None\n";
-		cin >> wkType;
+		// Get weapon type, validating input
+		while (wepType < SWORD || wepType > NONE)
+		{
+			cout << "Please enter the type of your weapon.\n";
+			cout << "0 = Sword, 1 = Axe, 2 = Lance, 3 = Bow, 4 = Tome, 5 = None\n";
+			cin >> wepType;
 
-		if (wkType < SWORD || wkType > NONE)
-			cout << "Invalid disadvantage type. Please try again.\n";
+			if (wepType < SWORD || wepType > NONE)
+				cout << "Invalid weapon type. Please try again.\n";
+		}
+
+		// Set the type of the weapon
+		tempWep.setWeaponType(static_cast<WeaponType>(wepType));
+
+		// Get damage type, validating input
+		while (dmgType < PHYSICAL || dmgType > MAGICAL)
+		{
+			cout << "Please enter the damage type of your weapon.\n";
+			cout << "0 = Physical, 1 = Magical\n";
+			cin >> dmgType;
+
+			if (dmgType < PHYSICAL || dmgType > MAGICAL)
+				cout << "Invalid damage type. Please try again.\n";
+		}
+
+		// Set the weapon's damage type
+		tempWep.setDamageType(static_cast<DamageType>(dmgType));
+
+		// Get weapon advantage type, validating input
+		while (strType < SWORD || strType > NONE)
+		{
+			cout << "Please enter the weapon type your weapon is strong against.\n";
+			cout << "0 = Sword, 1 = Axe, 2 = Lance, 3 = Bow, 4 = Tome, 5 = None\n";
+			cin >> strType;
+
+			if (strType < SWORD || strType > NONE)
+				cout << "Invalid advantage type. Please try again.\n";
+		}
+
+		// Set the weapon's advantage type
+		tempWep.setStrongType(static_cast<WeaponType>(strType));
+
+		// Get weapon disadvantage type, validating input
+		while (wkType < SWORD || wkType > NONE)
+		{
+			cout << "Please enter the weapon type your weapon is weak against.\n";
+			cout << "0 = Sword, 1 = Axe, 2 = Lance, 3 = Bow, 4 = Tome, 5 = None\n";
+			cin >> wkType;
+
+			if (wkType < SWORD || wkType > NONE)
+				cout << "Invalid disadvantage type. Please try again.\n";
+		}
+
+		// Set the weapon's disadvantage type
+		tempWep.setWeakType(static_cast<WeaponType>(wkType));
 	}
 
 	// Set up the player and the enemy
-	player = new BaseUnit(hp, atk, skl, spd, def, res, wepName, wepAtk, wepHit,
-		static_cast<WeaponType>(wepType), static_cast<DamageType>(dmgType), 
-		static_cast<WeaponType>(strType), static_cast<WeaponType>(wkType));
-	enemy = new BaseUnit(20, 3, 6, 6, 2, 4, "fire tome", 5, 90, TOME, MAGICAL, NONE, NONE);
+	player = new BaseUnit(hp, atk, skl, spd, def, res, tempWep);
+	enemy = new BaseUnit(20, 3, 6, 6, 2, 4, "Fire Tome", 5, 90, TOME, MAGICAL, NONE, NONE);
 
 	GameLoop();
 }
@@ -202,6 +257,8 @@ DamageType Game::FindDamageType(string name)
 		return PHYSICAL;
 	else if (name == "MAGICAL")
 		return MAGICAL;
+	else
+		return PHYSICAL;
 }
 
 // While both player and enemy don't have 0 hp, keep running this

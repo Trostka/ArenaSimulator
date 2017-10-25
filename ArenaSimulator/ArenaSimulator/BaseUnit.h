@@ -41,6 +41,20 @@ public:
 		totalHit = (skill * 2) + equippedWeapon->getWeaponHit();
 	}
 
+	// Constructor that accepts a weapon
+	BaseUnit(int hp, int ak, int sk, int sp, int df, int rs, BaseWeapon wep) :
+		maxHp(hp), attack(ak), skill(sk), speed(sp), defense(df), resistance(rs)
+	{
+		currentHp = maxHp;
+
+		equippedWeapon = new BaseWeapon(wep.getWeaponName(), wep.getWeaponAtk(), wep.getWeaponHit(),
+			wep.getWeaponType(), wep.getDamageType(), wep.getStrongType(), wep.getWeakType());
+
+		totalAtk = attack + equippedWeapon->getWeaponAtk();
+
+		totalHit = (skill * 2) + equippedWeapon->getWeaponHit();
+	}
+
 	// Take damage dealt by the enemy
 	void takeDamage(int amt) { currentHp -= amt; }
 

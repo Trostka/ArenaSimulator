@@ -60,6 +60,22 @@ public:
 	WeaponType getStrongType() { return strongType; }
 	// Accessor for weakType
 	WeaponType getWeakType() { return weakType; }
+
+	// Mutator for weaponName
+	void setWeaponName(std::string name) { weaponName = name; }
+	// Mutator for weaponAtk
+	void setWeaponAtk(int atk) { weaponAtk = atk; }
+	// Mutator for weaponHit
+	void setWeaponHit(int hit) { weaponHit = hit; }
+	// Mutator for weaponType
+	void setWeaponType(WeaponType wepType) { weaponType = wepType; }
+	// Mutator for damageType
+	void setDamageType(DamageType dmgType) { damageType = dmgType; }
+	// Mutator for strongType
+	void setStrongType(WeaponType strType) { strongType = strType; }
+	// Mutator for weakType
+	void setWeakType(WeaponType weakType) { weakType = weakType; }
+	
 };
 
 #endif

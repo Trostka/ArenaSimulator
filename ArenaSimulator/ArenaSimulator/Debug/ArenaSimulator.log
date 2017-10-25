@@ -1,13 +1,9 @@
-﻿Build started 10/21/2017 3:52:26 PM.
+﻿Build started 10/24/2017 8:34:53 PM.
      1>Project "D:\Programming\C++ Projects\Repositories\ArenaSimulator\ArenaSimulator\ArenaSimulator\ArenaSimulator.vcxproj" on node 2 (Build target(s)).
      1>ClCompile:
          C:\Program Files (x86)\Microsoft Visual Studio 12.0\VC\bin\CL.exe /c /ZI /nologo /W3 /WX- /sdl /Od /Oy- /D WIN32 /D _DEBUG /D _CONSOLE /D _LIB /D _UNICODE /D UNICODE /Gm /EHsc /RTC1 /MDd /GS /fp:precise /Zc:wchar_t /Zc:forScope /Yu"stdafx.h" /Fp"Debug\ArenaSimulator.pch" /Fo"Debug\\" /Fd"Debug\vc120.pdb" /Gd /TP /analyze- /errorReport:prompt ArenaSimulator.cpp Game.cpp
          Game.cpp
      1>d:\programming\c++ projects\repositories\arenasimulator\arenasimulator\arenasimulator\game.cpp(17): warning C4244: 'argument' : conversion from 'time_t' to 'unsigned int', possible loss of data
-     1>d:\programming\c++ projects\repositories\arenasimulator\arenasimulator\arenasimulator\game.cpp(118): warning C4101: 'wep' : unreferenced local variable
-     1>d:\programming\c++ projects\repositories\arenasimulator\arenasimulator\arenasimulator\game.cpp(117): warning C4101: 'dmg' : unreferenced local variable
-     1>d:\programming\c++ projects\repositories\arenasimulator\arenasimulator\arenasimulator\game.cpp(120): warning C4101: 'disadv' : unreferenced local variable
-     1>d:\programming\c++ projects\repositories\arenasimulator\arenasimulator\arenasimulator\game.cpp(119): warning C4101: 'adv' : unreferenced local variable
          Generating Code...
          Compiling...
          ArenaSimulator.cpp
@@ -22,4 +18,4 @@
 
 Build succeeded.
 
-Time Elapsed 00:00:03.79
+Time Elapsed 00:00:05.73
