@@ -22,7 +22,7 @@ Game::Game()
 	int hp, atk, skl, spd, def, res;
 
 	// Input vars to use for player's weapon
-	string wepName;
+	string wepName = "";
 	int wepAtk, wepHit, wepType, dmgType, strType, wkType;
 	wepAtk = wepType = dmgType = strType = wkType = -1;
 
@@ -66,19 +66,20 @@ Game::Game()
 	// Use a weapon from the array
 	if (choice == 1)
 	{
-		cin.ignore();
-		cout << "Please enter the name of the weapon you would like to use: ";
-		getline(cin, wepName);
+		// Set tempWep's name to "-1" for searching purposes
+		tempWep.setWeaponName("-1");
 
-		// Perform a linear search for a weapon with a matching name
-		vector<BaseWeapon>::iterator iter;
-		for (iter = weaponList.begin(); iter < weaponList.end(); iter++)
+		// Search for a weapon whose name matches wepName, validating input
+		while (tempWep.getWeaponName() != wepName)
 		{
-			if (iter->getWeaponName() == wepName)
-			{
-				tempWep = *iter;
-				break;
-			}
+			cin.ignore();
+			cout << "Please enter the name of the weapon you would like to use: ";
+			getline(cin, wepName);
+			
+			tempWep = SearchForWeapon(wepName);
+
+			if (tempWep.getWeaponName() != wepName)
+				cout << "Weapon not found. Please try again.\n";
 		}
 	}
 	// Create a custom weapon
@@ -181,7 +182,7 @@ void Game::GetWeaponData()
 	// Open the weapon data document for reading
 	XMLDocument doc;
 	doc.LoadFile("Content/Data/WeaponData.xml");
-	cout << doc.ErrorIDToName(doc.ErrorID()) << endl;
+	//cout << doc.ErrorIDToName(doc.ErrorID()) << endl;
 
 	// Get the root node of the document
 	XMLElement* rootNode = doc.FirstChildElement("weapons");
@@ -231,6 +232,24 @@ void Game::GetWeaponData()
 
 		damageNode = damageNode->NextSiblingElement("damage");
 	}
+}
+
+// Search for a weapon within the weapon list
+BaseWeapon Game::SearchForWeapon(string name)
+{
+	// Perform a linear search for a weapon with a matching name
+	vector<BaseWeapon>::iterator iter;
+	for (iter = weaponList.begin(); iter < weaponList.end(); iter++)
+	{
+		if (iter->getWeaponName() == name)
+		{
+			return *iter;
+			break;
+		}
+	}
+
+	// If the weapon is not found, return the last element of weaponList
+	return *iter;
 }
 
 // Get the weapon type by passing a string

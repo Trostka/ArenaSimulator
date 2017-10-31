@@ -21,10 +21,15 @@ public:
 	// Default constructor
 	Game();
 
-	// Load the xml file for weapons data and copy its contents into an array
+	// Load the xml file for weapons data and copy its contents into weaponList
 	void GetWeaponData();
 
+	// Search for a weapon whose name matches the string parameter
+	BaseWeapon SearchForWeapon(std::string name);
+
+	// Find weapon type based on the string parameter
 	WeaponType FindWeaponType(std::string name);
+	// Find damage type based on the string parameter
 	DamageType FindDamageType(std::string name);
 
 	// Game loop
